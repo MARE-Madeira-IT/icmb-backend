@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageCreated;
+use App\Http\Resources\MessageResource;
+use App\Jobs\SendMessage;
 use App\Models\Message;
 use Illuminate\Http\Request;
 
@@ -12,15 +15,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return MessageResource::collection(Message::latest()->get());
     }
 
     /**
@@ -28,7 +23,25 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $message = Message::create([
+            'content' => $request->content,
+            'user_id' => $request->user_id,
+            'chat_id' => $request->chat_id
+        ]);
+
+        $message->load('user');
+
+        broadcast(new MessageCreated($message));
+
+
+        // SendMessage::dispatch($message);
+
+        return new MessageResource($message);
+
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => "Message created and job dispatched.",
+        // ]);
     }
 
     /**

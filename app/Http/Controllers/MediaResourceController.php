@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MediaResourceResource;
 use App\Models\MediaResource;
 use Illuminate\Http\Request;
 
@@ -12,15 +13,7 @@ class MediaResourceController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return MediaResourceResource::collection(MediaResource::all()->groupBy("type"));
     }
 
     /**
@@ -36,15 +29,7 @@ class MediaResourceController extends Controller
      */
     public function show(MediaResource $mediaResource)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(MediaResource $mediaResource)
-    {
-        //
+        return new MediaResourceResource($mediaResource);
     }
 
     /**

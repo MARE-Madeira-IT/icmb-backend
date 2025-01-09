@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreFormRequest;
+use App\Http\Resources\FormResource;
 use App\Models\Form;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
 class FormController extends Controller
@@ -12,23 +15,23 @@ class FormController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return FormResource::collection(Form::all());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreFormRequest $request)
     {
-        //
+        $validator = $request->validated();
+        $form = Form::create($validator);
+
+
+        foreach ($validator["answers"] as $answer) {
+            $form->questions()->attach($answer["question_id"], ["answer" => $answer["answer"]]);
+        }
+
+        return new FormResource($form);
     }
 
     /**
@@ -36,7 +39,7 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
-        //
+        return new FormResource($form);
     }
 
     /**

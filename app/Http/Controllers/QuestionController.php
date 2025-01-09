@@ -2,25 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FormResource;
+use App\Http\Resources\QuestionResource;
+use App\Models\Form;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $validator = $request->validate([
+            'type' => 'required|string|max:20',
+        ]);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors()->toJson(), 400);
+        // }
+
+        return QuestionResource::collection(Question::where('type', $validator["type"])->get());
     }
 
     /**

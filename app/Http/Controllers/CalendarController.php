@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CalendarResource;
 use App\Models\Calendar;
 use Illuminate\Http\Request;
 
@@ -12,15 +13,7 @@ class CalendarController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return CalendarResource::collection(Calendar::orderBy('from')->get()->groupBy("from"));
     }
 
     /**
@@ -36,15 +29,7 @@ class CalendarController extends Controller
      */
     public function show(Calendar $calendar)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Calendar $calendar)
-    {
-        //
+        return new CalendarResource($calendar);
     }
 
     /**

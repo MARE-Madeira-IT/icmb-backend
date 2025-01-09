@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string("title");
             $table->date("date");
-            $table->date("from");
-            $table->date("to");
+            $table->datetime("from");
+            $table->datetime("to");
             $table->string("room");
             $table->timestamps();
         });

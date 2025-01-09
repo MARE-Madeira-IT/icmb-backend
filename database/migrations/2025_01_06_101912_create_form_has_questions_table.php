@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('form_has_questions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('form_id');
             $table->unsignedBigInteger('question_id');
             $table->string('answer');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('form_id')->references('id')->on('forms');
             $table->foreign('question_id')->references('id')->on('questions');
         });
     }

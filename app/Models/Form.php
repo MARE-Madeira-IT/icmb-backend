@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Form extends Model
 {
+    protected $fillable = [
+        'name',
+        'user_id',
+        'formable_id',
+        'formable_type',
+    ];
 
     /**
      * Get the parent formable model (session or poster).
@@ -14,5 +20,10 @@ class Form extends Model
     public function formable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function questions()
+    {
+        return $this->belongsToMany(Question::class, 'form_has_questions', 'form_id', 'question_id')->withPivot('answer');
     }
 }
