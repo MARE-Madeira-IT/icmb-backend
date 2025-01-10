@@ -33,7 +33,7 @@ class MessageController extends Controller
 
         $message->load('user')->load('chat');
 
-        broadcast(new MessageCreated($message));
+        broadcast(new MessageCreated($message))->toOthers();
 
 
         // SendMessage::dispatch($message);

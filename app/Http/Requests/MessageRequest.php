@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Chat;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class MessageRequest extends FormRequest
@@ -14,7 +16,12 @@ class MessageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return !!JWTAuth::parseToken()->authenticate();
+        try {
+            $user = auth()->user();
+            return Chat::find($this->chat_id)->users->contains($user->id);
+        } catch (JWTException $e) {
+            return 0;
+        }
     }
 
     protected function prepareForValidation()

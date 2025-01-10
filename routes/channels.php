@@ -10,23 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Pusher\Pusher;
 
 
-
-// Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-//     return (int) $user->id === (int) $id;
-// });
-
-
-Broadcast::channel('chat', function ($user) {
-    return true;
-});
-
-
-// Route::post('/auth', function (Request $request) {
-//     return Broadcast::auth($request);
-// });
-
 Broadcast::channel('chats.{chatSocket}', function (User $user, string $chatSocket) {
-    // true;
     return Chat::where("socket", $chatSocket)->first()->users->contains($user->id);
 });
 
