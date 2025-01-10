@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddToCalendarInvokable;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\MediaResourceController;
 use App\Http\Controllers\MessageController;
@@ -18,12 +19,15 @@ Route::get('/user', function (Request $request) {
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+Route::post('refresh', [AuthController::class, 'refresh']);
+Route::get('me', [AuthController::class, 'getUser']);
 
 Route::apiResource('/media', MediaResourceController::class);
 Route::apiResource('/calendar', CalendarController::class);
 Route::apiResource('/question', QuestionController::class);
 Route::apiResource('/forms', FormController::class);
 Route::apiResource('/messages', MessageController::class);
+Route::apiResource('/chats', ChatController::class);
 
 
 

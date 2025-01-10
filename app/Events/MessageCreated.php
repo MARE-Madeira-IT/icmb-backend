@@ -31,6 +31,6 @@ class MessageCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('chat');
+        return new Channel('chats.' . $this->message->chat->socket);
     }
 }
