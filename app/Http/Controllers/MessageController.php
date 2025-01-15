@@ -7,6 +7,7 @@ use App\Http\Requests\MessageRequest;
 use App\Http\Resources\MessageResource;
 use App\Jobs\SendMessage;
 use App\Models\Message;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
@@ -16,7 +17,21 @@ class MessageController extends Controller
      */
     public function index(Request $request)
     {
-        return MessageResource::collection(Message::where("chat_id", $request->chat_id)->latest()->get());
+        $messages = Message::where('chat_id', $request->chat_id)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        // Group messages by date
+        $groupedMessages = $messages->groupBy(function ($message) {
+            return Carbon::parse($message->created_at)->toDateString();
+        })->map(function ($messages, $date) {
+            return [
+                'date' => $date,
+                'messages' => MessageResource::collection($messages)->values(),
+            ];
+        })->values(); // Reset array indexes
+
+        return response()->json($groupedMessages);
     }
 
     /**
@@ -33,10 +48,11 @@ class MessageController extends Controller
 
         $message->load('user')->load('chat');
 
-        broadcast(new MessageCreated($message))->toOthers();
+        broadcast(new MessageCreated(new MessageResource($message), Carbon::parse($message->created_at)->toDateString()))->toOthers();
 
 
         // SendMessage::dispatch($message);
+
 
         return new MessageResource($message);
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\MarkAsReadInvokable;
 use App\Http\Controllers\MediaResourceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\QuestionController;
@@ -30,6 +31,7 @@ Route::apiResource('/messages', MessageController::class);
 Route::apiResource('/chats', ChatController::class);
 
 
+Route::put('mark-as-read', MarkAsReadInvokable::class);
 
 Route::post('add-to-calendar', AddToCalendarInvokable::class);
 Route::post('remove-from-calendar', RemoveFromCalendarInvokable::class);

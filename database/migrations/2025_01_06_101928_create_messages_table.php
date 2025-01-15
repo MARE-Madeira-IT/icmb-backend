@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('chat_id');
             $table->string("content");
+            $table->datetime("read_at")->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

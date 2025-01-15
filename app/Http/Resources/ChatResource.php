@@ -17,7 +17,9 @@ class ChatResource extends JsonResource
         return [
             'id' => $this->id,
             'socket' => $this->socket,
-            'users' =>  $this->users,
+            'recipient' =>  $this->users()->where('users.id', '!=', auth()->id())->first(),
+            'message' => $this->last_message,
+            'unread_messages' => $this->unread_messages,
         ];
     }
 }
