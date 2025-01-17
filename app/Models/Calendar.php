@@ -14,6 +14,15 @@ class Calendar extends Model
         "room",
     ];
 
+    public $appends = [
+        'my_schedule'
+    ];
+
+    public function getMyScheduleAttribute()
+    {
+        return $this->users->contains(auth()->user()->id);
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_has_calendars', 'calendar_id', 'user_id');

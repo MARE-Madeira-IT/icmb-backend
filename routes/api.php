@@ -24,7 +24,7 @@ Route::post('refresh', [AuthController::class, 'refresh']);
 Route::get('me', [AuthController::class, 'getUser']);
 
 Route::apiResource('/media', MediaResourceController::class);
-Route::apiResource('/calendar', CalendarController::class);
+Route::apiResource('/calendars', CalendarController::class);
 Route::apiResource('/question', QuestionController::class);
 Route::apiResource('/forms', FormController::class);
 Route::apiResource('/messages', MessageController::class);
@@ -33,7 +33,7 @@ Route::apiResource('/chats', ChatController::class);
 
 Route::put('mark-as-read', MarkAsReadInvokable::class);
 
-Route::post('add-to-calendar', AddToCalendarInvokable::class);
+Route::post('add-to-calendar/{calendar}', AddToCalendarInvokable::class);
 Route::post('remove-from-calendar', RemoveFromCalendarInvokable::class);
 
 Route::middleware([JwtMiddleware::class])->group(function () {
