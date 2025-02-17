@@ -34,7 +34,6 @@ Route::apiResource('/chats', ChatController::class);
 Route::put('mark-as-read', MarkAsReadInvokable::class);
 
 Route::post('update-calendar/{calendar}', UpdateCalendarInvokable::class);
-Route::post('remove-from-calendar', RemoveFromCalendarInvokable::class);
 
 Route::middleware([JwtMiddleware::class])->group(function () {
     Route::get('user', [AuthController::class, 'getUser']);
