@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AddToCalendarInvokable;
+use App\Http\Controllers\UpdateCalendarInvokable;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ChatController;
@@ -33,7 +33,7 @@ Route::apiResource('/chats', ChatController::class);
 
 Route::put('mark-as-read', MarkAsReadInvokable::class);
 
-Route::post('add-to-calendar/{calendar}', AddToCalendarInvokable::class);
+Route::post('update-calendar/{calendar}', UpdateCalendarInvokable::class);
 Route::post('remove-from-calendar', RemoveFromCalendarInvokable::class);
 
 Route::middleware([JwtMiddleware::class])->group(function () {

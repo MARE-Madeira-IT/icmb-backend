@@ -15,7 +15,12 @@ class RemoveFromCalendarInvokable extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
 
-        $user->calendars()->detach($request->calendar_id);
+
+        if ($user->calendars->contains($request->calendar_id)) {
+            $user->calendars()->detach($request->calendar_id);
+        } else { }
+
+
 
         return response()->json(null, 204);
     }

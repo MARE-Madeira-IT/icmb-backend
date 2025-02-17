@@ -7,7 +7,7 @@ use App\Models\Calendar;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class AddToCalendarInvokable extends Controller
+class UpdateCalendarInvokable extends Controller
 {
     /**
      * Handle the incoming request.
@@ -16,8 +16,13 @@ class AddToCalendarInvokable extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
 
-        $user->calendars()->syncWithoutDetaching($calendar->id);
+        if ($user->calendars->contains($calendar->id)) {
+            $user->calendars()->detach($calendar->id);
+        } else {
+            $user->calendars()->syncWithoutDetaching($calendar->id);
+        }
 
-        return new CalendarResource($user->calendars);
+
+        return new CalendarResource($calendar);
     }
 }
