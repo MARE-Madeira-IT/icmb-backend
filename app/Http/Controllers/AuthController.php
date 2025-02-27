@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -68,6 +70,26 @@ class AuthController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'Invalid token'], 400);
         }
+
+        return response()->json(compact('user'));
+    }
+
+
+    public function updateUser(UpdateUserRequest $request)
+    {
+        $validator = $request->validated();
+        $user = auth()->user();
+
+        if (array_key_exists("image", $validator)) {
+            $filename = uniqid() . '.' . $validator["image"]->getClientOriginalExtension();
+            $validator["image"]->move(storage_path('app/public/profile/'), $filename);
+            $validator["image"] =  "/storage/profile/"  . $filename;
+            // Storage::disk('public')->put(uniqid(), $validator["image"]);
+        }
+
+
+        $user->update($validator);
+
 
         return response()->json(compact('user'));
     }

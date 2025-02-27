@@ -8,6 +8,7 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\MarkAsReadInvokable;
 use App\Http\Controllers\MediaResourceController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\NetworkingController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\RemoveFromCalendarInvokable;
 use Illuminate\Http\Request;
@@ -29,6 +30,9 @@ Route::apiResource('/question', QuestionController::class);
 Route::apiResource('/forms', FormController::class);
 Route::apiResource('/messages', MessageController::class);
 Route::apiResource('/chats', ChatController::class);
+Route::apiResource('/networkings', NetworkingController::class);
+Route::patch('/users', [AuthController::class, 'updateUser']);
+
 
 
 Route::put('mark-as-read', MarkAsReadInvokable::class);

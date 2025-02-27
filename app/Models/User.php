@@ -22,7 +22,9 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'institution',
+        'image'
     ];
 
     /**
@@ -62,5 +64,10 @@ class User extends Authenticatable implements JWTSubject
     public function calendars()
     {
         return $this->belongsToMany(Calendar::class, 'user_has_calendars', 'user_id', 'calendar_id');
+    }
+
+    public function networkings()
+    {
+        return $this->hasMany(Networking::class);
     }
 }

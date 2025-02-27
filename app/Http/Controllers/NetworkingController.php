@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NetworkingRequest;
+use App\Http\Resources\NetworkingResource;
 use App\Models\Networking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NetworkingController extends Controller
 {
@@ -12,37 +15,31 @@ class NetworkingController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return NetworkingResource::collection(Networking::latest()->get());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(NetworkingRequest $request)
     {
-        //
+        $user = Auth::user();
+
+        if (!$user->networkings()->where('created_at', '>', now()->subHours(6))->exists()) {
+            $validator = $request->validated();
+            $record = Networking::create($validator);
+            return new NetworkingResource($record);
+        }
+
+        return response()->json([
+            'errors' => "User can't share their profile more than once every 6 hours",
+        ], 422);
     }
 
     /**
      * Display the specified resource.
      */
     public function show(Networking $networking)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Networking $networking)
     {
         //
     }
