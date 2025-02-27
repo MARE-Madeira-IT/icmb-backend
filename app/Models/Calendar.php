@@ -14,6 +14,10 @@ class Calendar extends Model
         "room",
     ];
 
+    protected $hidden = [
+        "users"
+    ];
+
     public $appends = [
         'my_schedule'
     ];
