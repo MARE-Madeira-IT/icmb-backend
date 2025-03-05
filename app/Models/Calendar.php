@@ -31,4 +31,9 @@ class Calendar extends Model
     {
         return $this->belongsToMany(User::class, 'user_has_calendars', 'calendar_id', 'user_id');
     }
+
+    public function speakers()
+    {
+        return $this->belongsToMany(Speaker::class, 'speaker_has_calendars', 'calendar_id', 'speaker_id');
+    }
 }

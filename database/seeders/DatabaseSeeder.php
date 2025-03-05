@@ -19,20 +19,23 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'User 1',
             'email' => 'test@example.com',
-            'role' => 'admin',
+            'role' => 'PhD student',
+            'institution' => 'MARE Madeira',
             'password' => Hash::make("secret"),
         ]);
 
         User::factory()->create([
             'name' => 'User 2',
             'email' => 'test2@example.com',
-            'role' => 'admin',
+            'role' => 'Research technician',
+            'institution' => 'MARE Madeira',
             'password' => Hash::make("secret"),
         ]);
 
         $this->call([
             CalendarSeeder::class,
             QuestionSeeder::class,
+            SponsorSeeder::class,
         ]);
     }
 }

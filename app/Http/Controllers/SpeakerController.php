@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\MediaResourceResource;
-use App\Models\MediaResource;
+use App\Http\Resources\SpeakerResource;
+use App\Models\Speaker;
 use Illuminate\Http\Request;
 
-class MediaResourceController extends Controller
+class SpeakerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-
-        return MediaResourceResource::collection(MediaResource::all()->groupBy("type"));
+        return SpeakerResource::collection(Speaker::all());
     }
 
     /**
@@ -28,16 +27,15 @@ class MediaResourceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(MediaResource $media)
+    public function show(Speaker $speaker)
     {
-        return response()->download(public_path('storage/') . $media->url);
-        // return new MediaResourceResource($mediaResource);
+        return new SpeakerResource($speaker->with('calendars')->find($speaker->id));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, MediaResource $mediaResource)
+    public function update(Request $request, Speaker $speaker)
     {
         //
     }
@@ -45,7 +43,7 @@ class MediaResourceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MediaResource $mediaResource)
+    public function destroy(Speaker $speaker)
     {
         //
     }
