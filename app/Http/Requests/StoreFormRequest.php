@@ -19,10 +19,8 @@ class StoreFormRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        $user  = JWTAuth::parseToken()->authenticate();
-
         $this->merge([
-            'user_id' => $user->id,
+            'user_id' => auth()->id(),
         ]);
     }
 
@@ -36,7 +34,7 @@ class StoreFormRequest extends FormRequest
         return [
             'answers' => 'required|array',
             'answers.*.question_id' => 'required|integer|exists:questions,id',
-            'answers.*.answer' => 'required|string|max:10|min:1',
+            'answers.*.answer' => 'required|max:10|min:1',
             'user_id' => 'required|integer|exists:users,id',
             'formable_id' => 'required|integer',
             'formable_type' => 'required|string',

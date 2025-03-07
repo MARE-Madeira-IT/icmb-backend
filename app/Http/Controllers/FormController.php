@@ -24,14 +24,18 @@ class FormController extends Controller
     public function store(StoreFormRequest $request)
     {
         $validator = $request->validated();
-        $form = Form::create($validator);
+        $formExists = Form::where("user_id", $validator["user_id"])->where("formable_id", $validator["formable_id"])->where("formable_type", $validator["formable_type"])->first();
+
+        if (!$formExists) {
+            $form = Form::create($validator);
 
 
-        foreach ($validator["answers"] as $answer) {
-            $form->questions()->attach($answer["question_id"], ["answer" => $answer["answer"]]);
+            foreach ($validator["answers"] as $answer) {
+                $form->questions()->attach($answer["question_id"], ["answer" => $answer["answer"]]);
+            }
+
+            return new FormResource($form);
         }
-
-        return new FormResource($form);
     }
 
     /**

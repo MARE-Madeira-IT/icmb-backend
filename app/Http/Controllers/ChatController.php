@@ -36,11 +36,21 @@ class ChatController extends Controller
      */
     public function store(Request $request)
     {
+        $chatExists = Chat::whereHas('users', function ($query) use ($request) {
+            $query->where('user_id', $request->user_id);
+        })->whereHas('users', function ($query) {
+            $query->where('user_id', auth()->id());
+        })->first();
+
+        if ($chatExists) {
+            return new ChatResource($chatExists);
+        }
+
         $chat = Chat::create([
             'socket' => uniqid(mt_rand(0, 10000), true),
         ]);
 
-        $chat->users()->attach([$request->user_id, $request->recipient_id]);
+        $chat->users()->attach([$request->user_id, auth()->id()]);
 
         return new ChatResource($chat);
     }

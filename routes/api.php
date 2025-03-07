@@ -4,6 +4,7 @@ use App\Http\Controllers\UpdateCalendarInvokable;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\MarkAsReadInvokable;
 use App\Http\Controllers\MediaResourceController;
@@ -28,13 +29,14 @@ Route::patch('/users', [AuthController::class, 'updateUser']);
 
 Route::apiResource('/medias', MediaResourceController::class);
 Route::apiResource('/calendars', CalendarController::class);
-Route::apiResource('/question', QuestionController::class);
+Route::apiResource('/questions', QuestionController::class);
 Route::apiResource('/forms', FormController::class);
 Route::apiResource('/messages', MessageController::class);
 Route::apiResource('/chats', ChatController::class);
 Route::apiResource('/networkings', NetworkingController::class);
 Route::apiResource('/sponsors', SponsorController::class);
 Route::apiResource('/speakers', SpeakerController::class);
+Route::apiResource('/faqs', FaqController::class);
 
 
 

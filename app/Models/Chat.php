@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Chat extends Model
 {
+    protected $fillable = ['socket'];
     protected $appends = ['last_message', 'unread_messages'];
 
     public function getLastMessageAttribute()

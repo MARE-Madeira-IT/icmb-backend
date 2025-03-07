@@ -2,19 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\MediaResourceResource;
-use App\Models\MediaResource;
+use App\Http\Resources\FaqResource;
+use App\Models\Faq;
 use Illuminate\Http\Request;
 
-class MediaResourceController extends Controller
+class FaqController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        return FaqResource::collection(Faq::all());
+    }
 
-        return MediaResourceResource::collection(MediaResource::all()->groupBy("type"));
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -28,18 +35,23 @@ class MediaResourceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(MediaResource $media)
+    public function show(Faq $faq)
     {
+        //
+    }
 
-
-        return response()->file(public_path('storage/') . $media->url);
-        // return new MediaResourceResource($mediaResource);
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Faq $faq)
+    {
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, MediaResource $mediaResource)
+    public function update(Request $request, Faq $faq)
     {
         //
     }
@@ -47,7 +59,7 @@ class MediaResourceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MediaResource $mediaResource)
+    public function destroy(Faq $faq)
     {
         //
     }

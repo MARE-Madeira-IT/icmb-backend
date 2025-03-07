@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             CalendarSeeder::class,
             QuestionSeeder::class,
             SponsorSeeder::class,
+            FaqSeeder::class,
         ]);
     }
 }

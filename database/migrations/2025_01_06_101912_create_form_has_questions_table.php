@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('answer');
             $table->timestamps();
 
-            $table->foreign('form_id')->references('id')->on('forms');
-            $table->foreign('question_id')->references('id')->on('questions');
+            $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
 
