@@ -25,7 +25,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('refresh', [AuthController::class, 'refresh']);
 Route::get('me', [AuthController::class, 'getUser']);
-Route::patch('/users', [AuthController::class, 'updateUser']);
+Route::post('/users', [AuthController::class, 'updateUser']);
 
 Route::apiResource('/medias', MediaResourceController::class);
 Route::apiResource('/calendars', CalendarController::class);
