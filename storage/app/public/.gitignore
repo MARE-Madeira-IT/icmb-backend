@@ -2,3 +2,6 @@
 !.gitignore
 !profile/
 !profile/default.jpg
+!images
+!images/sponsors
+!images/sponsors/*
