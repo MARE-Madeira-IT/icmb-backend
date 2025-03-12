@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -16,6 +18,22 @@ class UpdateUserRequest extends FormRequest
         return auth()->user() && true;
     }
 
+    protected function prepareForValidation()
+    {
+        if ($this->new_password && $this->current_password && $this->confirm_password) {
+            if (Hash::check($this->current_password, auth()->user()->password)) {
+                $newPassword = $this->new_password;
+            } else {
+                $newPassword = 1;
+            }
+
+            $this->merge([
+                'password' => $newPassword,
+                'password_confirmation' => $this->confirm_password,
+            ]);
+        }
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,11 +42,25 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'nullable|string',
+            'email' => 'nullable|string|unique:users,email,' . auth()->user()->id,
             'role' => 'nullable|string',
             'institution' => 'nullable|string',
             'image' => 'nullable|mimes:jpeg,jpg,png,gif',
             'description' => 'nullable|string',
+            'password' => 'nullable|string|confirmed',
+        ];
+    }
+
+    /**
+     * Custom message for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'password.string' => 'The current password is not correct.',
         ];
     }
 

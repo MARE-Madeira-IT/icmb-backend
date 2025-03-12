@@ -87,9 +87,12 @@ class AuthController extends Controller
             // Storage::disk('public')->put(uniqid(), $validator["image"]);
         }
 
-
-        $user->update($validator);
-
+        if (array_key_exists("password", $validator)) {
+            $user->password = Hash::make($validator['password']);
+            $user->save();
+        } else {
+            $user->update($validator);
+        }
 
         return response()->json(compact('user'));
     }
