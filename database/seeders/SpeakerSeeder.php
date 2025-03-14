@@ -14,6 +14,7 @@ class SpeakerSeeder extends Seeder
     public function run(): void
     {
         Speaker::create([
+            'user_id' => 1,
             'name' => 'John Doe',
             'country' => 'Portugal',
             'role' => 'Marine Biologist',
@@ -32,6 +33,7 @@ class SpeakerSeeder extends Seeder
         ]);
 
         Speaker::create([
+            'user_id' => 1,
             'name' => 'John Doe',
             'country' => 'Portugal',
             'role' => 'Marine Biologist',
@@ -46,6 +48,7 @@ class SpeakerSeeder extends Seeder
         ]);
 
         Speaker::create([
+            'user_id' => 1,
             'name' => 'John Doe',
             'country' => 'Portugal',
             'role' => 'Marine Biologist',
@@ -60,6 +63,7 @@ class SpeakerSeeder extends Seeder
         ]);
 
         Speaker::create([
+            'user_id' => 1,
             'name' => 'John Doe',
             'country' => 'Portugal',
             'role' => 'Marine Biologist',
@@ -74,6 +78,7 @@ class SpeakerSeeder extends Seeder
         ]);
 
         Speaker::create([
+            'user_id' => 1,
             'name' => 'John Doe',
             'country' => 'Portugal',
             'role' => 'Marine Biologist',
@@ -88,6 +93,7 @@ class SpeakerSeeder extends Seeder
         ]);
 
         Speaker::create([
+            'user_id' => 1,
             'name' => 'John Doe',
             'country' => 'Portugal',
             'role' => 'Marine Biologist',

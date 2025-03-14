@@ -43,7 +43,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'nullable|string',
-            'email' => 'nullable|string|unique:users,email,' . auth()->user()->id,
+            'email' => 'nullable|regex:/^[\w.-]+@([\w-]+\.)+[\w]{2,4}$/i|string|unique:users,email,' . auth()->user()->id,
             'role' => 'nullable|string',
             'institution' => 'nullable|string',
             'image' => 'nullable|mimes:jpeg,jpg,png,gif',
