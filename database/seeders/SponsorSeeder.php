@@ -15,32 +15,32 @@ class SponsorSeeder extends Seeder
     {
         Sponsor::create([
             'name' => 'MARE',
-            'logo' => '/images/sponsors/mare.png',
+            'logo' => 'sponsors/mare.png',
             'category' => 'organization'
         ]);
 
         Sponsor::create([
             'name' => 'SSMB',
-            'logo' => '/images/sponsors/ssmb.png',
+            'logo' => 'sponsors/ssmb.png',
             'category' => 'organization'
         ]);
 
 
         Sponsor::create([
             'name' => 'MARE',
-            'logo' => '/images/sponsors/mare.png',
+            'logo' => 'sponsors/mare.png',
             'category' => 'lionfish'
         ]);
 
         Sponsor::create([
             'name' => 'SSMB',
-            'logo' => '/images/sponsors/ssmb.png',
+            'logo' => 'sponsors/ssmb.png',
             'category' => 'blue crab'
         ]);
 
         Sponsor::create([
             'name' => 'SSMB',
-            'logo' => '/images/sponsors/ssmb.png',
+            'logo' => 'sponsors/ssmb.png',
             'category' => 'red algae'
         ]);
     }
