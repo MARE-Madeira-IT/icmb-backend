@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -71,7 +72,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'Invalid token'], 400);
         }
 
-        return response()->json(compact('user'));
+        return new UserResource($user);
     }
 
 
@@ -81,10 +82,7 @@ class AuthController extends Controller
         $user = auth()->user();
 
         if (array_key_exists("image", $validator)) {
-            $filename = uniqid() . '.' . $validator["image"]->getClientOriginalExtension();
-            $validator["image"]->move(storage_path('app/public/profile/'), $filename);
-            $validator["image"] =  "/storage/profile/"  . $filename;
-            // Storage::disk('public')->put(uniqid(), $validator["image"]);
+            $validator["image"] = Storage::putFile("user_images", $validator["image"]);
         }
 
         if (array_key_exists("password", $validator)) {
@@ -94,7 +92,7 @@ class AuthController extends Controller
             $user->update($validator);
         }
 
-        return response()->json(compact('user'));
+        return new UserResource($user);
     }
 
     // User logout
@@ -103,5 +101,11 @@ class AuthController extends Controller
         JWTAuth::invalidate(JWTAuth::getToken());
 
         return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    public function refresh()
+    {
+        $newToken = auth()->refresh();
+        return response()->json(["token" => $newToken], 200);
     }
 }

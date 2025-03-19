@@ -13,7 +13,7 @@ class SponsorController extends Controller
      */
     public function index()
     {
-        return SponsorResource::collection(Sponsor::all()->groupBy('category'));
+        return SponsorResource::collection(Sponsor::all())->groupBy('category');
     }
 
     /**
