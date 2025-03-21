@@ -50,9 +50,9 @@ Route::middleware([JwtMiddleware::class])->group(function () {
 });
 
 Route::get("file/{path}", function (Request $request, $path) {
-    if (! $request->hasValidSignature()) {
-        abort(401);
-    }
+    // if (! $request->hasValidSignature()) {
+    //     abort(401);
+    // }
 
     return Storage::disk("local")->download($path);
 })->where("path", ".*")->name('local.temp');
