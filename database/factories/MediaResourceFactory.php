@@ -19,7 +19,7 @@ class MediaResourceFactory extends Factory
         return [
             'title' => fake()->name(),
             'type' => fake()->randomElement(['Posters', 'Social Media', 'Program']),
-            'url' => "/storage/profile/default.jpg",
+            'url' => "user_images/default.jpg",
         ];
     }
 }
