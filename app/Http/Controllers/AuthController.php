@@ -65,6 +65,7 @@ class AuthController extends Controller
     public function getUser()
     {
         try {
+            logger("ME REQUEST");
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['error' => 'User not found'], 404);
             }
