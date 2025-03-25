@@ -9,16 +9,16 @@ use Kreait\Firebase\Messaging\CloudMessage;
 class SendNotificationJob implements ShouldQueue
 {
     use Queueable;
-    private $title, $body, $tokens;
+    private $title, $body, $user;
 
     /**
      * Create a new job instance.
      */
-    public function __construct($title, $body, array $tokens)
+    public function __construct($title, $body, $user)
     {
         $this->title = $title;
         $this->body = $body;
-        $this->tokens = $tokens;
+        $this->user = $user;
     }
 
     /**
@@ -29,12 +29,14 @@ class SendNotificationJob implements ShouldQueue
         $messaging = app('firebase.messaging');
 
         $message = CloudMessage::new()
-            ->withNotification([
-                "title" => $this->title,
-                "body" => $this->body
-            ])
-            ->withData(['key' => 'value']);
+            // ->withNotification([
+            //     "title" => $this->title,
+            //     "body" => $this->body
+            // ])
+            ->withData(["title" => $this->title, "body" => $this->body]);
 
-        $messaging->sendMulticast($message, $this->tokens);
+        $tokens = $this->user->pushNotificationTokens()->pluck("token")->toArray();
+
+        $messaging->sendMulticast($message, $tokens);
     }
 }

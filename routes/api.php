@@ -10,6 +10,7 @@ use App\Http\Controllers\MarkAsReadInvokable;
 use App\Http\Controllers\MediaResourceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NetworkingController;
+use App\Http\Controllers\PushNotificationTokenController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\SponsorController;
@@ -47,6 +48,7 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::put('mark-as-read', MarkAsReadInvokable::class);
 
     Route::post('update-calendar/{calendar}', UpdateCalendarInvokable::class);
+    Route::post('push-notification-tokens', [PushNotificationTokenController::class, 'store']);
 });
 
 Route::get("file/{path}", function (Request $request, $path) {

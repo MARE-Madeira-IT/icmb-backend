@@ -65,7 +65,6 @@ class AuthController extends Controller
     public function getUser()
     {
         try {
-            logger("ME REQUEST");
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['error' => 'User not found'], 404);
             }
@@ -97,8 +96,14 @@ class AuthController extends Controller
     }
 
     // User logout
-    public function logout()
+    public function logout(Request $request)
     {
+        $user = auth()->user();
+        $user->pushNotificationTokens()->where(
+            "token",
+            $request->notificationToken
+        )->delete();
+
         JWTAuth::invalidate(JWTAuth::getToken());
 
         return response()->json(['message' => 'Successfully logged out']);
