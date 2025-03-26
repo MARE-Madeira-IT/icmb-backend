@@ -47,7 +47,7 @@ class ChatController extends Controller
         }
 
         $chat = Chat::create([
-            'socket' => uniqid(mt_rand(0, 10000), true),
+            'socket' => str_replace(".", "", uniqid(mt_rand(0, 10000), true)),
         ]);
 
         $chat->users()->attach([$request->user_id, auth()->id()]);

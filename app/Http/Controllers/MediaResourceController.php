@@ -14,7 +14,7 @@ class MediaResourceController extends Controller
     public function index()
     {
 
-        return MediaResourceResource::collection(MediaResource::all()->groupBy("type"));
+        return MediaResourceResource::collection(MediaResource::all())->groupBy("type");
     }
 
     /**
