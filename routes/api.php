@@ -6,6 +6,7 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\LogRecordController;
 use App\Http\Controllers\MarkAsReadInvokable;
 use App\Http\Controllers\MediaResourceController;
 use App\Http\Controllers\MessageController;
@@ -25,6 +26,8 @@ Route::get('/user', function (Request $request) {
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+
+Route::post("log-records", [LogRecordController::class, "store"]);
 
 Route::middleware([JwtMiddleware::class])->group(function () {
     Route::get('user', [AuthController::class, 'getUser']);
