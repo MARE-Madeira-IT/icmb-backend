@@ -24,7 +24,9 @@ class Calendar extends Model
 
     public function getMyScheduleAttribute()
     {
-        return $this->users->contains(auth()->user()->id);
+        if (auth()->user()) {
+            return $this->users->contains(auth()->user()->id);
+        }
     }
 
     public function users()

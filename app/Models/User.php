@@ -67,6 +67,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Calendar::class, 'user_has_calendars', 'user_id', 'calendar_id');
     }
 
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class, 'user_has_notifications', 'user_id', 'notification_id');
+    }
+
     public function networkings()
     {
         return $this->hasMany(Networking::class);

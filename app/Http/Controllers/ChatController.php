@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ChatResource;
 use App\Models\Chat;
+use App\Models\Notification;
+use App\Models\UserHasNotification;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -51,6 +53,9 @@ class ChatController extends Controller
         ]);
 
         $chat->users()->attach([$request->user_id, auth()->id()]);
+
+
+        Notification::CreateConnection(auth()->user(), $request->user_id);
 
         return new ChatResource($chat);
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CalendarResource;
 use App\Models\Calendar;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CalendarController extends Controller
@@ -13,6 +14,8 @@ class CalendarController extends Controller
      */
     public function index()
     {
+        // return Calendar::where('from', '<', Carbon::now()->add(10, 'minutes'))->get();
+
         return CalendarResource::collection(Calendar::orderBy('from')->get()->groupBy("from"));
     }
 

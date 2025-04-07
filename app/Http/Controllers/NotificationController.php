@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NotificationResource;
+use App\Jobs\NotificationSeenJob;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 
@@ -12,15 +14,25 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        //
+        $notifications = auth()->user()
+            ->notifications()
+            ->withPivot('seen')
+            ->latest()
+            ->get();
+
+        NotificationSeenJob::dispatch($notifications, auth()->user()->id);
+
+
+        return NotificationResource::collection($notifications);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+    public function count()
     {
-        //
+        return auth()->user()
+            ->notifications()
+            ->wherePivot('seen', false)
+            ->count();
     }
 
     /**

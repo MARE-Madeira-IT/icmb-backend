@@ -11,6 +11,7 @@ use App\Http\Controllers\MarkAsReadInvokable;
 use App\Http\Controllers\MediaResourceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NetworkingController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PushNotificationTokenController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SpeakerController;
@@ -36,9 +37,9 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::get('me', [AuthController::class, 'getUser']);
     Route::post('/users', [AuthController::class, 'updateUser']);
+    Route::apiResource('/calendars', CalendarController::class);
 
     Route::apiResource('/medias', MediaResourceController::class);
-    Route::apiResource('/calendars', CalendarController::class);
     Route::apiResource('/questions', QuestionController::class);
     Route::apiResource('/forms', FormController::class);
     Route::apiResource('/messages', MessageController::class);
@@ -47,6 +48,8 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::apiResource('/sponsors', SponsorController::class);
     Route::apiResource('/speakers', SpeakerController::class);
     Route::apiResource('/faqs', FaqController::class);
+    Route::apiResource('/notifications', NotificationController::class);
+    Route::get('count-notifications', [NotificationController::class, 'count']);
 
     Route::put('mark-as-read', MarkAsReadInvokable::class);
 

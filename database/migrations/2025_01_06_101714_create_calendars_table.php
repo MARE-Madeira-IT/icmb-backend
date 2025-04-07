@@ -18,6 +18,7 @@ return new class extends Migration
             $table->datetime("from");
             $table->datetime("to");
             $table->string("room");
+            $table->boolean("notified")->default(false);
             $table->timestamps();
         });
     }
