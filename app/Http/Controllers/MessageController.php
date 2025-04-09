@@ -7,6 +7,7 @@ use App\Http\Requests\MessageRequest;
 use App\Http\Resources\MessageResource;
 use App\Jobs\SendMessage;
 use App\Models\Message;
+use App\Models\Notification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -49,6 +50,7 @@ class MessageController extends Controller
         $message->load('user')->load('chat');
 
         broadcast(new MessageCreated(new MessageResource($message), Carbon::parse($message->created_at)->toDateString()))->toOthers();
+        Notification::NewMessage($validator["chat_id"], auth()->id());
 
 
         // SendMessage::dispatch($message);
