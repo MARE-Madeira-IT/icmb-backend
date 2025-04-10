@@ -12,6 +12,7 @@ use App\Http\Controllers\MediaResourceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NetworkingController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\PushNotificationTokenController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SpeakerController;
@@ -55,6 +56,9 @@ Route::middleware([JwtMiddleware::class])->group(function () {
 
     Route::post('update-calendar/{calendar}', UpdateCalendarInvokable::class);
     Route::post('push-notification-tokens', [PushNotificationTokenController::class, 'store']);
+
+    Route::get("/posts", [PostController::class, "index"]);
+    Route::post("/posts", [PostController::class, "store"]);
 });
 
 Route::get("file/{path}", function (Request $request, $path) {
