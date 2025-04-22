@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\SendNotificationJob;
 use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
@@ -41,6 +42,8 @@ class Notification extends Model
         $attachNotification = UserHasNotification::where('notification_id', $notification->id)
             ->where('user_id', $recipient->id)
             ->first();
+
+        SendNotificationJob::dispatchAfterResponse('Unread message', "You have unread messages", $recipient);
 
         if ($attachNotification) {
             $attachNotification->seen = false;
