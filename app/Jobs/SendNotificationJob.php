@@ -30,7 +30,7 @@ class SendNotificationJob implements ShouldQueue
     {
         try {
 
-            $factory = (new Factory)->withServiceAccount('/storage/app/private/serviceAccountKey.json');
+            $factory = (new Factory)->withServiceAccount('storage/app/private/serviceAccountKey.json');
             $messaging = $factory->createMessaging();
 
             $message = CloudMessage::new()
