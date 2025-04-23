@@ -34,15 +34,11 @@ class SendNotificationJob implements ShouldQueue
             $messaging = $factory->createMessaging();
 
             $message = CloudMessage::new()
-                // ->withNotification([
-                //     "title" => $this->title,
-                //     "body" => $this->body
-                // ])
                 ->withData(["title" => $this->title, "body" => $this->body]);
 
             $tokens = $this->user->pushNotificationTokens()->pluck("token")->toArray();
 
-            $messaging->sendMulticast($message, ['dNb3uuHuVkSbtRLb3xJ2X2:APA91bFhWPT6lu_tp8tRSU5b3siw7I0BR_PD75z70jnC6ThYUZeqvk2tMoiKKeAU3vBcSGvCgwgP3ohVTuaAzlab55hVhcIp35dBPsLfO2F6sY1Zvs4ZcN4']);
+            $messaging->sendMulticast($message, $tokens);
         } catch (ConnectException $th) {
             logger("CAUGHT!");
             logger($th->getMessage());
