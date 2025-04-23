@@ -39,15 +39,16 @@ class CalendarReminder extends Command
             $userhasnotifications = UserHasCalendar::where('calendar_id', $calendar->id)->get();
 
             if (count($userhasnotifications)) {
+                $minDiff = Carbon::now()->diffInMinutes($calendar->from, true);
                 $notification = Notification::create([
                     'title' => $calendar->title,
                     'type' => 'reminder',
-                    'body' => "Your session will start in 10 minutes.",
+                    'body' => "Your session will start in $minDiff minutes.",
                 ]);
 
                 foreach ($userhasnotifications as $userhasnotification) {
                     $notification->users()->attach($userhasnotification->user_id);
-                    SendNotificationJob::dispatchAfterResponse($calendar->title, "Your session will start in 10 minutes.", User::findOrFail($userhasnotification->user_id));
+                    SendNotificationJob::dispatchAfterResponse($calendar->title, "Your session will start in $calendar->from minutes.", User::findOrFail($userhasnotification->user_id));
                 }
             }
             $calendar->notified = 1;
