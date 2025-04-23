@@ -42,7 +42,7 @@ class SystemAlert extends Command
 
         foreach ($users as $user) {
             $notification->users()->attach($user->id, ['seen' => false]);
-            SendNotificationJob::dispatchAfterResponse($title, $body, User::findOrFail($user));
+            SendNotificationJob::dispatchAfterResponse($title, $body, $user);
         }
 
         $this->info('Notification sent to all users');
