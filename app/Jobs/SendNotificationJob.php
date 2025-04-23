@@ -37,6 +37,8 @@ class SendNotificationJob implements ShouldQueue
 
         $tokens = $this->user->pushNotificationTokens()->pluck("token")->toArray();
 
+        logger($tokens);
+
         $messaging->sendMulticast($message, $tokens);
     }
 }
