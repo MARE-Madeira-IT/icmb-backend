@@ -39,7 +39,7 @@ class CalendarReminder extends Command
             $userhasnotifications = UserHasCalendar::where('calendar_id', $calendar->id)->get();
 
             if (count($userhasnotifications)) {
-                $minDiff = Carbon::now()->diffInMinutes($calendar->from, true);
+                $minDiff = round(Carbon::now()->diffInMinutes($calendar->from, true));
                 $notification = Notification::create([
                     'title' => $calendar->title,
                     'type' => 'reminder',
