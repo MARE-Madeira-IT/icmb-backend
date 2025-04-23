@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\SendNotificationJob;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Console\Command;
@@ -38,8 +39,10 @@ class SystemAlert extends Command
             'type' => $type,
         ]);
 
+
         foreach ($users as $user) {
             $notification->users()->attach($user->id, ['seen' => false]);
+            SendNotificationJob::dispatchAfterResponse($title, $body, User::findOrFail($user));
         }
 
         $this->info('Notification sent to all users');
