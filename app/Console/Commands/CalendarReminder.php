@@ -48,7 +48,7 @@ class CalendarReminder extends Command
 
                 foreach ($userhasnotifications as $userhasnotification) {
                     $notification->users()->attach($userhasnotification->user_id);
-                    SendNotificationJob::dispatchAfterResponse($calendar->title, "Your session will start in $calendar->from minutes.", User::findOrFail($userhasnotification->user_id));
+                    SendNotificationJob::dispatchAfterResponse($calendar->title, "Your session will start in $minDiff minutes.", User::findOrFail($userhasnotification->user_id));
                 }
             }
             $calendar->notified = 1;
