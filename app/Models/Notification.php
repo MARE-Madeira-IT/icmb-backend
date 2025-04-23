@@ -61,6 +61,8 @@ class Notification extends Model
             'type' => 'connection',
         ]);
 
+        SendNotificationJob::dispatchAfterResponse($currentUser->name, 'Connnected with you', User::findOrFail($userId));
+
         $notification->users()->attach([$userId]);
     }
 

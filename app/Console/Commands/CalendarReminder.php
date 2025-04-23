@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\SendNotificationJob;
 use App\Models\Calendar;
 use App\Models\Notification;
+use App\Models\User;
 use App\Models\UserHasCalendar;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -33,7 +35,6 @@ class CalendarReminder extends Command
             ->where('notified', 0)
             ->get();
 
-        logger($calendars);
         foreach ($calendars as $calendar) {
             $userhasnotifications = UserHasCalendar::where('calendar_id', $calendar->id)->get();
 
@@ -43,8 +44,10 @@ class CalendarReminder extends Command
                     'type' => 'reminder',
                     'body' => "Your session will start in 10 minutes.",
                 ]);
+
                 foreach ($userhasnotifications as $userhasnotification) {
                     $notification->users()->attach($userhasnotification->user_id);
+                    SendNotificationJob::dispatchAfterResponse($calendar->title, "Your session will start in 10 minutes.", User::findOrFail($userhasnotification->user_id));
                 }
             }
             $calendar->notified = 1;
