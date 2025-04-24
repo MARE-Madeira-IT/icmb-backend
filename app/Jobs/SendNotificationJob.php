@@ -36,7 +36,8 @@ class SendNotificationJob implements ShouldQueue
 
                 $message = CloudMessage::new()
                     ->withNotification(["title" => $this->title, "body" => $this->body])
-                    ->withData(["title" => $this->title, "body" => $this->body]);
+                    // ->withData(["title" => $this->title, "body" => $this->body])
+                ;
 
 
                 $messaging->sendMulticast($message, $tokens);
