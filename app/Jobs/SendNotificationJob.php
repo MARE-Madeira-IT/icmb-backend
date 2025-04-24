@@ -35,6 +35,7 @@ class SendNotificationJob implements ShouldQueue
                 $messaging = $factory->createMessaging();
 
                 $message = CloudMessage::new()
+                    ->withNotification(["title" => $this->title, "body" => $this->body])
                     ->withData(["title" => $this->title, "body" => $this->body]);
 
 
