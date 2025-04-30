@@ -72,9 +72,9 @@ class NotificationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserHasNotification $userHasNotification)
+    public function destroy($userHasNotificationId)
     {
-        $userHasNotification->delete();
+        UserHasNotification::findOrFail($userHasNotificationId)?->delete();
 
         return response()->json(["mesage" => "Deleted"]);
     }
