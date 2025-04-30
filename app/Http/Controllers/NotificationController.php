@@ -18,6 +18,7 @@ class NotificationController extends Controller
     {
         $notifications = auth()->user()
             ->notifications()
+            ->wherePivotNull('deleted_at')
             ->withPivot('seen', 'id')
             ->latest()
             ->get();
