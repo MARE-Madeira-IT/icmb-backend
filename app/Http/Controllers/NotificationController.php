@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Resources\NotificationResource;
 use App\Jobs\NotificationSeenJob;
 use App\Models\Notification;
+use App\Models\UserHasNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
@@ -72,7 +74,7 @@ class NotificationController extends Controller
      */
     public function destroy(Notification $notification)
     {
-        auth()->user()->notifications()->where('notification_id', $notification->id)->delete();
+        UserHasNotification::where('notification_id', $notification->id)->where('user_id', Auth::id())->delete();
 
         return response()->json(["mesage" => "Deleted"]);
     }
