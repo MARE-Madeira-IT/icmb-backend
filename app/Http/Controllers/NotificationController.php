@@ -18,7 +18,7 @@ class NotificationController extends Controller
     {
         $notifications = auth()->user()
             ->notifications()
-            ->withPivot('seen')
+            ->withPivot('seen', 'id')
             ->latest()
             ->get();
 
@@ -72,9 +72,9 @@ class NotificationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Notification $notification)
+    public function destroy(UserHasNotification $userHasNotification)
     {
-        UserHasNotification::where('notification_id', $notification->id)->where('user_id', Auth::id())->delete();
+        $userHasNotification->delete();
 
         return response()->json(["mesage" => "Deleted"]);
     }
