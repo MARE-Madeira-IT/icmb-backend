@@ -72,7 +72,7 @@ class NotificationController extends Controller
      */
     public function destroy(Notification $notification)
     {
-        $notification->delete();
+        auth()->user()->notifications()->where('notification_id', $notification->id)->delete();
 
         return response()->json(["mesage" => "Deleted"]);
     }
