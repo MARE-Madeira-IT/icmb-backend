@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'User 1',
+            'name' => 'Admin',
             'email' => 'test@example.com',
             'role' => 'PhD student',
             'institution' => 'MARE Madeira',
@@ -25,10 +25,50 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'name' => 'User 2',
-            'email' => 'test2@example.com',
-            'role' => 'Research technician',
-            'institution' => 'MARE Madeira',
+            'name' => 'Lisa Drake',
+            'email' => 'lisa@example.com',
+            'role' => 'Americas Manager',
+            'institution' => 'Marine Field Services & Monitoring at SGS',
+            'password' => Hash::make("secret"),
+        ]);
+
+        User::factory()->create([
+            'name' => 'Ross Cuthbert',
+            'email' => 'ross@example.com',
+            'role' => 'Leverhulme Research Fellow ',
+            'institution' => "Queen's University Belfast",
+            'password' => Hash::make("secret"),
+        ]);
+
+        User::factory()->create([
+            'name' => 'Amy Freestone',
+            'email' => 'amy@example.com',
+            'role' => 'Principal Investigator',
+            'institution' => "Smithsonian Environmental Research Center",
+            'password' => Hash::make("secret"),
+        ]);
+
+        User::factory()->create([
+            'name' => 'Ana Cristina Cardoso',
+            'email' => 'ana@example.com',
+            'role' => 'Scientific Officer',
+            'institution' => 'European Commission Joint Research Centre',
+            'password' => Hash::make("secret"),
+        ]);
+
+        User::factory()->create([
+            'name' => 'Taeko Kimura',
+            'email' => 'taeko@example.com',
+            'role' => 'Professor',
+            'institution' => 'Mie University',
+            'password' => Hash::make("secret"),
+        ]);
+
+        User::factory()->create([
+            'name' => 'Graeme Inglis',
+            'email' => 'graeme@example.com',
+            'role' => 'Chief Science Advisor',
+            'institution' => 'National Institute of Water & Atmospheric Research',
             'password' => Hash::make("secret"),
         ]);
 
@@ -37,6 +77,7 @@ class DatabaseSeeder extends Seeder
             QuestionSeeder::class,
             SponsorSeeder::class,
             FaqSeeder::class,
+            SpeakerSeeder::class,
         ]);
     }
 }

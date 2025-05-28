@@ -29,6 +29,8 @@ return new class extends Migration
             $table->string('youtube')->nullable();
             $table->string('tiktok')->nullable();
             $table->string('website')->nullable();
+            $table->string('website2')->nullable();
+            $table->string('bluesky')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
