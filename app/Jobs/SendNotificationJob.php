@@ -2,9 +2,11 @@
 
 namespace App\Jobs;
 
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Factory;
 
 class SendNotificationJob implements ShouldQueue
 {
@@ -26,17 +28,23 @@ class SendNotificationJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $messaging = app('firebase.messaging');
+        try {
+            $tokens = $this->user->pushNotificationTokens()->pluck("token")->toArray();
+            if ($tokens) {
+                $factory = (new Factory)->withServiceAccount(storage_path('app/private/serviceAccountKey.json'));
+                $messaging = $factory->createMessaging();
 
-        $message = CloudMessage::new()
-            // ->withNotification([
-            //     "title" => $this->title,
-            //     "body" => $this->body
-            // ])
-            ->withData(["title" => $this->title, "body" => $this->body]);
+                $message = CloudMessage::new()
+                    ->withNotification(["title" => $this->title, "body" => $this->body])
+                    // ->withData(["title" => $this->title, "body" => $this->body])
+                ;
 
-        $tokens = $this->user->pushNotificationTokens()->pluck("token")->toArray();
 
-        $messaging->sendMulticast($message, $tokens);
+                $messaging->sendMulticast($message, $tokens);
+            }
+        } catch (ConnectException $th) {
+            logger("CAUGHT!");
+            logger($th->getMessage());
+        }
     }
 }

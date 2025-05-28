@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Jobs\SendNotificationJob;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Notification extends Model
 {
@@ -42,6 +44,8 @@ class Notification extends Model
             ->where('user_id', $recipient->id)
             ->first();
 
+        SendNotificationJob::dispatchAfterResponse('Unread message', "You have unread messages", $recipient);
+
         if ($attachNotification) {
             $attachNotification->seen = false;
             $attachNotification->save();
@@ -57,6 +61,8 @@ class Notification extends Model
             'body' => 'Connnected with you',
             'type' => 'connection',
         ]);
+
+        SendNotificationJob::dispatchAfterResponse($currentUser->name, 'Connnected with you', User::findOrFail($userId));
 
         $notification->users()->attach([$userId]);
     }
